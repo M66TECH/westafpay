@@ -23,6 +23,27 @@ composer analyse      # Run PHPStan (larastan)
 composer format       # Run Pint
 ```
 
+### Windows
+
+The package requires PHP 8.4, but Windows users often have an older PHP in their `PATH`.
+`scripts/php84.ps1` runs the same checks with a dedicated PHP 8.4 binary:
+
+```powershell
+# Run Pint, PHPStan and Pest
+powershell -ExecutionPolicy Bypass -File scripts/php84.ps1
+
+# Run a single check
+powershell -ExecutionPolicy Bypass -File scripts/php84.ps1 -Task test
+powershell -ExecutionPolicy Bypass -File scripts/php84.ps1 -Task analyse
+powershell -ExecutionPolicy Bypass -File scripts/php84.ps1 -Task format
+
+# Use a specific PHP 8.4 binary
+$env:PHP84_PATH = 'C:\php84\php.exe'
+powershell -ExecutionPolicy Bypass -File scripts/php84.ps1
+```
+
+The binary is looked up in this order: `-Php`, `$env:PHP84_PATH`, `./.php84/php.exe`, then the default temp path.
+
 Please make sure all three commands pass before opening a pull request.
 
 ## Workflow
