@@ -5,31 +5,31 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/laravelsn/westafpay/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/laravelsn/westafpay/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/laravelsn/westafpay.svg?style=flat-square)](https://packagist.org/packages/laravelsn/westafpay)
 
-Westafpay lets you interact easily with payment providers in West Africa from your Laravel application.
+Westafpay vous permet d'interagir facilement avec les fournisseurs de paiement d'Afrique de l'Ouest depuis votre application Laravel.
 
-The package is built on top of [Saloon](https://docs.saloon.dev) and currently supports the [Wave](https://docs.wave.com) APIs:
+Le package est construit sur [Saloon](https://docs.saloon.dev) et prend actuellement en charge les API de [Wave](https://docs.wave.com) :
 
-- Checkout API
-- Payout API
-- Balance & Reconciliation API
-- Merchant API
-- Request signing (`Wave-Signature`)
+- API Checkout
+- API Payout
+- API Balance & Reconciliation
+- API Merchant
+- Signature des requêtes (`Wave-Signature`)
 
 ## Installation
 
-You can install the package via composer:
+Vous pouvez installer le package via Composer :
 
 ```bash
 composer require laravelsn/westafpay
 ```
 
-You can publish the config file with:
+Vous pouvez publier le fichier de configuration avec :
 
 ```bash
 php artisan vendor:publish --tag="westafpay-config"
 ```
 
-This is the contents of the published config file (`config/westafpay.php`):
+Voici le contenu du fichier de configuration publié (`config/westafpay.php`) :
 
 ```php
 return [
@@ -42,20 +42,20 @@ return [
 ];
 ```
 
-Add your credentials to `.env`:
+Ajoutez vos identifiants dans le fichier `.env` :
 
 ```dotenv
 WAVE_API_KEY=wave_sn_prod_...
-# Optional: only required when request signing is enabled on your API key
+# Optionnel : requis uniquement si la signature des requêtes est activée sur votre clé API
 WAVE_SIGNING_SECRET=wave_sn_AKS_...
 ```
 
-## Usage
+## Utilisation
 
 ```php
 use Laravelsn\Westafpay\Facades\Westafpay;
 
-// Balance & reconciliation
+// Balance & réconciliation
 Westafpay::getBalance();
 Westafpay::getBalance(include_subaccounts: true);
 Westafpay::getTransactions(date: '2022-11-07');
@@ -88,10 +88,10 @@ Westafpay::getPayoutBatch('pb-185skxq8g1006');
 Westafpay::reversePayout('pt-185sewgm8100t');
 ```
 
-### Paginating transactions
+### Pagination des transactions
 
-`getTransactions()` returns the raw first page. Use `paginateTransactions()` to lazily walk every page,
-using Wave's `page_info.end_cursor` as the `after` cursor:
+`getTransactions()` renvoie uniquement la première page brute. Utilisez `paginateTransactions()`
+pour parcourir paresseusement toutes les pages, en utilisant `page_info.end_cursor` comme curseur `after` :
 
 ```php
 foreach (Westafpay::paginateTransactions(date: '2022-11-07') as $response) {
@@ -101,13 +101,13 @@ foreach (Westafpay::paginateTransactions(date: '2022-11-07') as $response) {
 }
 ```
 
-### Request signing
+### Signature des requêtes
 
-When `WAVE_SIGNING_SECRET` is set, every request is automatically signed with a fresh
-`Wave-Signature: t={timestamp},v1={hmac}` header, as described in the
-[Wave documentation](https://docs.wave.com/balance-api#request-signing).
+Lorsque `WAVE_SIGNING_SECRET` est défini, chaque requête est automatiquement signée avec un en-tête
+`Wave-Signature: t={timestamp},v1={hmac}`, comme décrit dans la
+[documentation de Wave](https://docs.wave.com/balance-api#request-signing).
 
-## Testing
+## Tests
 
 ```bash
 composer test
@@ -117,21 +117,22 @@ composer format
 
 ## Changelog
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+Veuillez consulter le [CHANGELOG](CHANGELOG.md) pour plus d'informations sur les changements récents.
 
-## Contributing
+## Contribution
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+Veuillez consulter le [CONTRIBUTING](CONTRIBUTING.md) pour plus de détails.
 
-## Security Vulnerabilities
+## Vulnérabilités de sécurité
 
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+Veuillez consulter [notre politique de sécurité](../../security/policy) pour savoir comment signaler
+une vulnérabilité.
 
-## Credits
+## Crédits
 
 - [Laravelsn](https://github.com/Laravelsn)
-- [All Contributors](../../contributors)
+- [Tous les contributeurs](../../contributors)
 
-## License
+## Licence
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+La licence MIT (MIT). Veuillez consulter le [fichier de licence](LICENSE.md) pour plus d'informations.

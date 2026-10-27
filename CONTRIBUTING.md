@@ -1,13 +1,13 @@
-# Contributing to Westafpay
+# Contribuer à Westafpay
 
-Thanks for considering contributing to Westafpay. This document explains how to get started.
+Merci de votre intérêt pour Westafpay. Ce document explique comment démarrer.
 
-## Requirements
+## Prérequis
 
-- PHP **8.4** or higher
+- PHP **8.4** ou supérieur
 - [Composer](https://getcomposer.org)
 
-## Local setup
+## Installation locale
 
 ```bash
 git clone https://github.com/laravel-sn/westafpay.git
@@ -15,66 +15,46 @@ cd westafpay
 composer install
 ```
 
-## Useful commands
+## Commandes utiles
 
 ```bash
-composer test         # Run the Pest test suite
-composer analyse      # Run PHPStan (larastan)
-composer format       # Run Pint
+composer test         # Lance la suite de tests Pest
+composer analyse      # Lance PHPStan (larastan)
+composer format       # Lance Pint
 ```
 
-### Windows
+Assurez-vous que ces trois commandes passent avant d'ouvrir une pull request.
 
-The package requires PHP 8.4, but Windows users often have an older PHP in their `PATH`.
-`scripts/php84.ps1` runs the same checks with a dedicated PHP 8.4 binary:
+## Déroulement
 
-```powershell
-# Run Pint, PHPStan and Pest
-powershell -ExecutionPolicy Bypass -File scripts/php84.ps1
+1. Forkez le dépôt.
+2. Créez une branche depuis `main` : `git checkout -b fix/ma-correction`.
+3. Faites votre modification, ajoutez les tests correspondants et mettez à jour la documentation si besoin.
+4. Lancez `composer format`, `composer analyse` et `composer test`.
+5. Faites un commit avec un message clair, par exemple `fix: utilise l'endpoint checkout au singulier`.
+6. Poussez votre branche et ouvrez une pull request vers `main`.
 
-# Run a single check
-powershell -ExecutionPolicy Bypass -File scripts/php84.ps1 -Task test
-powershell -ExecutionPolicy Bypass -File scripts/php84.ps1 -Task analyse
-powershell -ExecutionPolicy Bypass -File scripts/php84.ps1 -Task format
+## Où contribuer
 
-# Use a specific PHP 8.4 binary
-$env:PHP84_PATH = 'C:\php84\php.exe'
-powershell -ExecutionPolicy Bypass -File scripts/php84.ps1
-```
+Consultez [TODO.md](TODO.md) pour les fonctionnalités manquantes connues et les issues ouvertes.
+Quelques bons points de départ :
 
-The binary is looked up in this order: `-Php`, `$env:PHP84_PATH`, `./.php84/php.exe`, then the default temp path.
+- Ajouter des tests pour les endpoints qui n'en ont pas encore.
+- Implémenter une nouvelle API Wave (par exemple les webhooks).
+- Améliorer la documentation.
+- Ajouter le support d'un autre fournisseur de paiement d'Afrique de l'Ouest.
 
-Please make sure all three commands pass before opening a pull request.
+## Ajouter un nouvel endpoint Wave
 
-## Workflow
+Les requêtes se trouvent dans `src/Http/Integrations/Wave/Requests/<Api>/`. Chaque requête est un
+`Request` Saloon qui a seulement besoin d'un `resolveEndpoint()` (et éventuellement de
+`defaultQuery()` / `defaultBody()`). Exposez-la ensuite depuis `WaveClient`, `WaveProvider`, et
+ajoutez un test dans `tests/Http/Integrations/Wave/Requests`.
 
-1. Fork the repository.
-2. Create a branch from `main`: `git checkout -b fix/my-fix`.
-3. Make your change, add tests covering it and update the docs if needed.
-4. Run `composer format`, `composer analyse` and `composer test`.
-5. Commit using a clear message, e.g. `fix: use singular checkout endpoint`.
-6. Push your branch and open a pull request against `main`.
+Vérifiez toujours l'endpoint dans la [documentation officielle de Wave](https://docs.wave.com).
 
-## Where to contribute
+## Style de code
 
-Look at [TODO.md](TODO.md) for known missing features and at the open issues. Some good starting points:
-
-- Adding tests for endpoints that are not covered yet.
-- Implementing a new Wave API (e.g. webhooks).
-- Improving the documentation.
-- Supporting another West African payment provider.
-
-## Adding a new Wave endpoint
-
-Requests live in `src/Http/Integrations/Wave/Requests/<Api>/`. Each request is a Saloon
-`Request` that only needs a `resolveEndpoint()` (and optionally `defaultQuery()` /
-`defaultBody()`). Then expose it from `WaveClient`, `WaveProvider` and add a test in
-`tests/Http/Integrations/Wave/Requests`.
-
-Always double-check the endpoint against the [official Wave documentation](https://docs.wave.com).
-
-## Coding style
-
-- Follow the existing conventions (Pint / Laravel preset).
-- Do not use debugging helpers such as `dd`, `dump` or `ray` (enforced by an arch test).
-- Keep pull requests focused: one topic per pull request.
+- Suivez les conventions existantes (Pint / preset Laravel).
+- N'utilisez pas d'aides de débogage comme `dd`, `dump` ou `ray` (vérifié par un test d'architecture).
+- Gardez des pull requests ciblées : un seul sujet par pull request.

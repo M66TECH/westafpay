@@ -1,22 +1,22 @@
 # Changelog
 
-All notable changes to `westafpay` will be documented in this file.
+Toutes les modifications notables de `westafpay` sont documentées dans ce fichier.
 
-## Unreleased
+## Non publié
 
-### Fixed
+### Corrigé
 
-- Publish the config file and register the `westafpay` command through `spatie/laravel-package-tools`.
-- Fix the default Wave base URL (`https://api.wave.com.` had a trailing dot).
-- Use the correct singular Wave Checkout endpoints (`/v1/checkout/sessions` instead of `/v1/checkouts/sessions`).
-- Use the correct Wave Payout search endpoint (`/v1/payouts/search` instead of `/v1/payout/search`).
-- Replace the non existing `reservePayout()` (there is no `reserve` endpoint on Wave) with `reversePayout()` (`POST /v1/payout/:id/reverse`).
-- Rename the `DataTransfertObjects` namespace to `DataTransferObjects`.
+- Publication du fichier de configuration et enregistrement de la commande `westafpay` via `spatie/laravel-package-tools`.
+- Correction de l'URL de base par défaut de Wave (`https://api.wave.com.` contenait un point final en trop).
+- Utilisation des bons endpoints Checkout de Wave (`/v1/checkout/sessions` au lieu de `/v1/checkouts/sessions`).
+- Utilisation du bon endpoint de recherche de payout (`/v1/payouts/search` au lieu de `/v1/payout/search`).
+- Remplacement de `reservePayout()` (aucun endpoint `reserve` n'existe chez Wave) par `reversePayout()` (`POST /v1/payout/:id/reverse`).
+- Renommage du namespace `DataTransfertObjects` en `DataTransferObjects`.
 
-### Added
+### Ajouté
 
-- Request signing: automatically send a `Wave-Signature` header when `WAVE_SIGNING_SECRET` is set.
-- Paginated transactions through `paginateTransactions()`, and `first` support on `getTransactions()`.
-- Optional `signing_secret` and `webhook_secret` config keys.
-- A test suite covering the connector, the client and the Wave requests.
-- `CONTRIBUTING.md` and a more complete `README.md`.
+- Signature des requêtes : envoi automatique de l'en-tête `Wave-Signature` lorsque `WAVE_SIGNING_SECRET` est défini.
+- Pagination des transactions via `paginateTransactions()`, et prise en charge de `first` dans `getTransactions()`.
+- Nouvelles clés de configuration optionnelles `signing_secret` et `webhook_secret`.
+- Une suite de tests couvrant le connecteur, le client et les requêtes Wave.
+- `CONTRIBUTING.md` et un `README.md` plus complet.
