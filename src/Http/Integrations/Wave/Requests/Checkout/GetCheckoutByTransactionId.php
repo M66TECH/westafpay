@@ -15,7 +15,7 @@ class GetCheckoutByTransactionId extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/v1/checkouts/sessions';
+        return '/v1/checkout/sessions';
     }
 
     protected function defaultQuery(): array

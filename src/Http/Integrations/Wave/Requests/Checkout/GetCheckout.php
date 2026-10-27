@@ -15,6 +15,6 @@ class GetCheckout extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/v1/checkouts/sessions/'.$this->id;
+        return '/v1/checkout/sessions/'.$this->id;
     }
 }

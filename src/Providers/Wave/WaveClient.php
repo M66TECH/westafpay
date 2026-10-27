@@ -17,12 +17,13 @@ use Laravelsn\Westafpay\Http\Integrations\Wave\Requests\Payout\CreatePayout as C
 use Laravelsn\Westafpay\Http\Integrations\Wave\Requests\Payout\GetPayout as GetPayoutRequest;
 use Laravelsn\Westafpay\Http\Integrations\Wave\Requests\Payout\GetPayoutBatch as GetPayoutBatchRequest;
 use Laravelsn\Westafpay\Http\Integrations\Wave\Requests\Payout\PayoutBatch as PayoutBatchRequest;
-use Laravelsn\Westafpay\Http\Integrations\Wave\Requests\Payout\ReservePayout as ReservePayoutRequest;
+use Laravelsn\Westafpay\Http\Integrations\Wave\Requests\Payout\ReversePayout as ReversePayoutRequest;
 use Laravelsn\Westafpay\Http\Integrations\Wave\Requests\Payout\SearchPayout as SearchPayoutRequest;
 use Laravelsn\Westafpay\Http\Integrations\Wave\Requests\Reconciliation\Balance as BalanceRequest;
 use Laravelsn\Westafpay\Http\Integrations\Wave\Requests\Reconciliation\Refund as RefundRequest;
 use Laravelsn\Westafpay\Http\Integrations\Wave\Requests\Reconciliation\Transaction as TransactionRequest;
 use Laravelsn\Westafpay\Http\Integrations\Wave\WaveConnector;
+use Saloon\PaginationPlugin\Paginator;
 
 class WaveClient
 {
@@ -37,8 +38,8 @@ class WaveClient
     {
         $balanceRequest = new BalanceRequest;
 
-        if ($include_subaccounts === true) {
-            $balanceRequest->query()->add('include_subaccounts', 'true');
+        if ($include_subaccounts !== null) {
+            $balanceRequest->query()->add('include_subaccounts', $include_subaccounts ? 'true' : 'false');
         }
 
         $response = $this->connector->send($balanceRequest);
@@ -50,17 +51,9 @@ class WaveClient
         return $response->throw();
     }
 
-    public function transactions(?string $date = null, ?bool $include_subaccounts = null)
+    public function transactions(?string $date = null, ?bool $include_subaccounts = null, ?int $first = null)
     {
-        $transactionRequest = new TransactionRequest;
-
-        if ($date) {
-            $transactionRequest->query()->add('date', $date);
-        }
-
-        if ($include_subaccounts === true) {
-            $transactionRequest->query()->add('include_subaccounts', 'true');
-        }
+        $transactionRequest = new TransactionRequest($date, $include_subaccounts, $first);
 
         $response = $this->connector->send($transactionRequest);
 
@@ -69,6 +62,14 @@ class WaveClient
         }
 
         return $response->throw();
+    }
+
+    /**
+     * Lazily paginate through every transaction returned by the Wave API.
+     */
+    public function paginateTransactions(?string $date = null, ?bool $include_subaccounts = null, ?int $first = null): Paginator
+    {
+        return $this->connector->paginate(new TransactionRequest($date, $include_subaccounts, $first));
     }
 
     public function refund(string $transaction_id)
@@ -219,9 +220,12 @@ class WaveClient
         return $response->throw();
     }
 
-    public function reservePayout(string $id)
+    /**
+     * Reverse a payout by id (identifier starting with pt-).
+     */
+    public function reversePayout(string $id)
     {
-        $response = $this->connector->send(new ReservePayoutRequest($id));
+        $response = $this->connector->send(new ReversePayoutRequest($id));
         if ($response->successful()) {
             return $response->json();
         }

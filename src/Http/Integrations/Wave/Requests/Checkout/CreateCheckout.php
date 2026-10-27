@@ -19,7 +19,7 @@ class CreateCheckout extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return '/v1/checkouts/sessions';
+        return '/v1/checkout/sessions';
     }
 
     protected function defaultHeaders(): array

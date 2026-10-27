@@ -11,7 +11,7 @@ class RefundCheckout extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/v1/checkouts/sessions/'.$this->transaction_id.'/refund';
+        return '/v1/checkout/sessions/'.$this->transaction_id.'/refund';
     }
 
     public function __construct(

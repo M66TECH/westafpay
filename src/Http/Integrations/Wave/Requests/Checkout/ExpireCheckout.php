@@ -11,7 +11,7 @@ class ExpireCheckout extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/v1/checkouts/sessions/'.$this->transaction_id.'/expire';
+        return '/v1/checkout/sessions/'.$this->transaction_id.'/expire';
     }
 
     public function __construct(

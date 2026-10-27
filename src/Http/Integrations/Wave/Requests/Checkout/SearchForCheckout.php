@@ -11,7 +11,7 @@ class SearchForCheckout extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/v1/checkouts/sessions/search';
+        return '/v1/checkout/sessions/search';
     }
 
     public function __construct(

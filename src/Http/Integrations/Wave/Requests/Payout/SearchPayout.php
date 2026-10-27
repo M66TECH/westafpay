@@ -11,7 +11,7 @@ class SearchPayout extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/v1/payout/search';
+        return '/v1/payouts/search';
     }
 
     public function __construct(

@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravelsn\Westafpay\DataTransfertObjects\Wave\Transaction;
+namespace Laravelsn\Westafpay\DataTransferObjects\Wave\Transaction;
 
 class TransactionItemDto
 {

@@ -21,6 +21,11 @@ class WaveProvider
         return $this->client->transactions($date, $include_subaccounts);
     }
 
+    public function paginateTransactions(?string $date = null, ?bool $include_subaccounts = null)
+    {
+        return $this->client->paginateTransactions($date, $include_subaccounts);
+    }
+
     public function refund(string $transaction_id)
     {
         return $this->client->refund($transaction_id);
@@ -95,11 +100,11 @@ class WaveProvider
     }
 
     /**
-     * Reserves a payout by id (identifier starting with pt-).
+     * Reverses a payout by id (identifier starting with pt-).
      */
-    public function reservePayout(string $id)
+    public function reversePayout(string $id)
     {
-        return $this->client->reservePayout($id);
+        return $this->client->reversePayout($id);
     }
 
     public function getMerchant()

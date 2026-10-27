@@ -1,9 +1,9 @@
 <?php
 
-namespace Laravelsn\Westafpay\DataTransfertObjects\Wave;
+namespace Laravelsn\Westafpay\DataTransferObjects\Wave;
 
-use Laravelsn\Westafpay\DataTransfertObjects\Wave\Transaction\PageInfoDto;
-use Laravelsn\Westafpay\DataTransfertObjects\Wave\Transaction\TransactionItemDto;
+use Laravelsn\Westafpay\DataTransferObjects\Wave\Transaction\PageInfoDto;
+use Laravelsn\Westafpay\DataTransferObjects\Wave\Transaction\TransactionItemDto;
 
 class TransactionResponseData
 {

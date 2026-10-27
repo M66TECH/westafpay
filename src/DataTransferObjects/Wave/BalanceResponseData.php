@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravelsn\Westafpay\DataTransfertObjects\Wave;
+namespace Laravelsn\Westafpay\DataTransferObjects\Wave;
 
 class BalanceResponseData
 {
