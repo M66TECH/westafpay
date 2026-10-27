@@ -15,6 +15,6 @@
 ## Next steps
 
 - [ ] Webhooks: verify the `Wave-Signature` header of incoming events
-- [ ] Request signing for every request (done, enable with `WAVE_SIGNING_SECRET`)
+- [x] Request signing for every request (enable with `WAVE_SIGNING_SECRET`)
 - [ ] Add tests for the Merchant API endpoints
 - [ ] Support another West African payment provider
